@@ -22,7 +22,6 @@ class HourCodeViewSet(viewsets.ModelViewSet):
     queryset = HourCode.objects.all()
     serializer_class = HourCodeSerializer
 
-
    
 class ReportView(generics.ListAPIView):
     serializer_class = ActivitySerializer
@@ -34,3 +33,7 @@ class ReportView(generics.ListAPIView):
         if start is not None and end is not None:
             queryset = queryset.filter(work_date__range=[start, end])
         return queryset
+        
+# www.ex.com?start=today&end=tomorrow
+# request = Request()
+# request.query_params = {"start": "today", "end": "tomorrow"}

@@ -55,6 +55,19 @@ class ActivitySerializer(serializers.ModelSerializer):
         extra_kwargs = {"location": {"write_only": True}, "user": {"write_only": True}, "hour_code": {"write_only": True}}
 
 
+    def update(self, instance, validated_data):
+        if instance.is_locked():
+            raise serializers.ValidationError("You cannot update. Item is locked")
+        instance.work_date = validated_data.get("work_date", instance.work_date)
+        instance.location = validated_data.get("location", instance.location)
+        instance.user = validated_data.get("user", instance.user)
+        instance.time_in = validated_data.get("time_ine", instance.time_in)
+        instance.time_out = validated_data.get("time_out", instance.time_out)
+        instance.hour_code = validated_data.get("hour_code", instance.hour_code)
+        instance.fbp_payrol = validated_data.get("fbp_payrol", instance.fbp_payrol)
+        instance.amco_payrol = validated_data.get("amco_payrol", instance.amco_payrol)
+        return instance
+
     def get_is_locked(self, obj):
         return obj.is_locked()
     
